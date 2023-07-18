@@ -9,6 +9,7 @@ import Modal from 'react-bootstrap/Modal';
 import {useParams} from "react-router-dom";
 import Rect from "../tools/rect";
 import axios from "axios"
+import {serverUrl} from "../vars";
 
 class Message {
     figure: {
@@ -23,8 +24,6 @@ class Message {
 
 const Canvas: FC = observer(() => {
 
-    const serverUrl = 'https://cos9191.github.io/paint_online_server:5000'
-
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const usernameRef = useRef<HTMLInputElement>(null)
     const [isShown, setModal] = useState(true)
@@ -33,7 +32,7 @@ const Canvas: FC = observer(() => {
     useEffect(() => {
         canvasState.setCanvas(canvasRef.current!);
         let context = canvasRef.current?.getContext('2d')
-        axios.get(`http://localhost:5000/image?id=${params.id}`)
+        axios.get(`http:${serverUrl}image?id=${params.id}`)
             .then(response => {
                 const img = new Image()
                 img.src = response.data
@@ -46,7 +45,7 @@ const Canvas: FC = observer(() => {
 
     useEffect(() => {
         if (canvasState.username) {
-            const socket = new WebSocket('ws://localhost:5000/')
+            const socket = new WebSocket(`ws:${serverUrl}`)
             canvasState.setSocket(socket)
             canvasState.setSessionId(params.id || '')
             toolState.setTool(new Brush(canvasRef.current!, socket, params.id!))
@@ -89,7 +88,7 @@ const Canvas: FC = observer(() => {
     const mouseDownHandler = () => {
         if (canvasRef.current) {
             canvasState.pushToUndo(canvasRef.current.toDataURL())
-            axios.post(`http://localhost:5000/image?id=${params.id}`, {img: canvasRef.current.toDataURL()}).then(response => console.log(response.data))
+            axios.post(`http:${serverUrl}image?id=${params.id}`, {img: canvasRef.current.toDataURL()}).then(response => console.log(response.data))
         }
     }
     const connectionHandler = () => {

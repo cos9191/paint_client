@@ -1,0 +1,5 @@
+@import "./vars.scss";
+
+.settings-bar {
+    top: $barHeight + $barPadding*2;
+}

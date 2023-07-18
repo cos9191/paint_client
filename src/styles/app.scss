@@ -1,0 +1,19 @@
+@import "./vars.scss";
+@import '~bootstrap/scss/bootstrap';
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.app {
+  height: 100vh;
+  max-height: 100vh;
+  width: 100vw;
+  background-color: $canvasBg;
+}

@@ -1,0 +1,15 @@
+@import "./vars.scss";
+
+.bar {
+    position: absolute;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    height: $barHeight + $barPadding*2;
+    width: 100%;
+
+    background-color: #ffffff;
+    box-shadow: 0 4px 5px gray;
+}
